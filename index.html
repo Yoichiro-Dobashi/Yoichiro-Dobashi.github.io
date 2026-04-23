@@ -178,7 +178,7 @@ footer a:hover{color:var(--ocean);}
 <section id="about">
   <div class="about-grid">
     <div class="about-photo-wrap">
-      <img class="about-photo" id="ghAvatar" src="profile.JPG" alt="Yoichiro Dobashi" onerror="this.src='https://avatars.githubusercontent.com/Yoichiro-Dobashi'">
+      <img class="about-photo" src="profile.JPG" alt="Yoichiro Dobashi">
       <div class="about-photo-name">Yoichiro Dobashi</div>
       <div class="about-photo-role">Ph.D. Student · MG&amp;G</div>
       <div class="skills-row">
@@ -341,8 +341,7 @@ footer a:hover{color:var(--ocean);}
 </footer>
 
 <script>
-// Fallback avatar if local file fails
-document.getElementById('ghAvatar').onerror=function(){this.src='https://avatars.githubusercontent.com/Yoichiro-Dobashi';this.onerror=null;};
+
 
 // Contact form
 function handleForm(e){
