@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yoichiro Dobashi — Marine Geodesist</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0a0d0f;
+  --bg2:#111518;
+  --bg3:#181d21;
+  --ink:#f0ede8;
+  --ink2:#a0a8b0;
+  --ink3:#565e68;
+  --ocean:#3db8d4;
+  --ocean2:#1a8fa8;
+  --glow:rgba(61,184,212,0.15);
+  --border:rgba(255,255,255,0.07);
+  --serif:'Playfair Display',serif;
+  --sans:'Inter',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hidden;line-height:1.7;}
+
+/* scrollbar */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--ink3);border-radius:2px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;background:rgba(10,13,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--mono);font-size:.75rem;color:var(--ocean);letter-spacing:.08em;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-size:.8rem;font-weight:400;color:var(--ink2);text-decoration:none;letter-spacing:.04em;transition:color .2s;}
+.nav-links a:hover{color:var(--ink);}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 3rem;max-width:1200px;margin:0 auto;position:relative;}
+.hero-sub{font-family:var(--mono);font-size:.72rem;color:var(--ocean);letter-spacing:.18em;text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .2s forwards;}
+.hero-name{font-family:var(--serif);font-size:clamp(3.5rem,8vw,7rem);font-weight:700;line-height:1.0;color:var(--ink);margin-bottom:1rem;opacity:0;animation:fadeUp .8s .35s forwards;}
+.hero-name span{color:var(--ocean);font-style:italic;}
+.hero-tagline{font-size:1.1rem;color:var(--ink2);font-weight:300;max-width:500px;line-height:1.8;margin-bottom:3rem;opacity:0;animation:fadeUp .8s .5s forwards;}
+.hero-tagline em{color:var(--ink);font-style:normal;font-weight:400;}
+.hero-scroll{font-family:var(--mono);font-size:.68rem;color:var(--ink3);letter-spacing:.12em;display:flex;align-items:center;gap:10px;opacity:0;animation:fadeUp .8s .65s forwards;}
+.hero-scroll::after{content:'';width:40px;height:1px;background:var(--ink3);}
+
+/* ocean animation bg */
+.hero-bg{position:absolute;right:-5%;top:50%;transform:translateY(-50%);width:500px;height:500px;pointer-events:none;opacity:.06;}
+.hero-bg circle{fill:none;stroke:var(--ocean);}
+
+/* ABOUT */
+#about{max-width:1100px;margin:0 auto;padding:8rem 3rem;}
+.about-grid{display:grid;grid-template-columns:1fr 2fr;gap:5rem;align-items:start;}
+.about-photo-wrap{position:sticky;top:8rem;}
+.about-photo{width:100%;aspect-ratio:1;border-radius:50%;object-fit:cover;border:1px solid var(--border);filter:grayscale(20%);}
+.about-photo-name{font-family:var(--serif);font-size:1.1rem;color:var(--ink);margin-top:1.2rem;text-align:center;}
+.about-photo-role{font-family:var(--mono);font-size:.68rem;color:var(--ocean);letter-spacing:.1em;text-align:center;margin-top:4px;}
+.skills-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.2rem;}
+.skill-tag{font-family:var(--mono);font-size:.65rem;padding:3px 10px;border-radius:4px;background:rgba(61,184,212,.08);color:var(--ocean);border:1px solid rgba(61,184,212,.2);}
+.about-text h2{font-family:var(--serif);font-size:1.9rem;font-weight:400;color:var(--ink);margin-bottom:1.5rem;line-height:1.3;}
+.about-text h2 em{color:var(--ocean);}
+.about-text p{color:var(--ink2);font-size:.97rem;line-height:1.85;margin-bottom:1.2rem;}
+
+/* SECTION LABEL */
+.sec-label{font-family:var(--mono);font-size:.68rem;color:var(--ink3);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.6rem;}
+.sec-title{font-family:var(--serif);font-size:2rem;font-weight:400;color:var(--ink);margin-bottom:3rem;}
+
+/* RESEARCH */
+#research{max-width:1100px;margin:0 auto;padding:6rem 3rem;}
+.research-list{display:flex;flex-direction:column;gap:0;}
+.research-item{display:grid;grid-template-columns:60px 1fr;gap:2rem;padding:2.5rem 0;border-bottom:1px solid var(--border);transition:background .2s;}
+.research-item:last-child{border-bottom:none;}
+.research-num{font-family:var(--mono);font-size:.75rem;color:var(--ink3);padding-top:4px;}
+.research-body{}
+.research-title{font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--ink);margin-bottom:.5rem;}
+.research-title a{color:inherit;text-decoration:none;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;}
+.research-title a:hover{color:var(--ocean);}
+.research-arrow{color:var(--ink3);font-size:.9rem;flex-shrink:0;margin-top:2px;transition:transform .2s,color .2s;}
+.research-title a:hover .research-arrow{transform:translate(3px,-3px);color:var(--ocean);}
+.research-desc{font-size:.88rem;color:var(--ink2);line-height:1.7;margin-bottom:.75rem;}
+.research-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.rtag{font-family:var(--mono);font-size:.63rem;padding:2px 8px;border-radius:3px;background:var(--bg3);color:var(--ink3);border:1px solid var(--border);}
+
+/* PUBLICATIONS */
+#publications{max-width:1100px;margin:0 auto;padding:6rem 3rem;}
+.pub-list{display:flex;flex-direction:column;gap:1.5rem;}
+.pub-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:2rem;display:grid;grid-template-columns:1fr;gap:.5rem;transition:border .25s;}
+.pub-card:hover{border-color:rgba(61,184,212,.3);}
+.pub-card.featured{grid-template-columns:200px 1fr;gap:2rem;}
+.pub-img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px;background:var(--bg3);}
+.pub-img-ph{width:100%;aspect-ratio:16/10;border-radius:8px;background:var(--bg3);display:flex;align-items:center;justify-content:center;}
+.pub-venue{font-family:var(--mono);font-size:.65rem;color:var(--ocean);letter-spacing:.08em;margin-bottom:.4rem;}
+.pub-title-text{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--ink);margin-bottom:.4rem;line-height:1.4;}
+.pub-title-text a{color:inherit;text-decoration:none;}
+.pub-title-text a:hover{color:var(--ocean);}
+.pub-authors{font-size:.8rem;color:var(--ink2);margin-bottom:.3rem;}
+.pub-authors strong{color:var(--ink);}
+.pub-desc{font-size:.83rem;color:var(--ink2);line-height:1.65;}
+.pub-doi{font-family:var(--mono);font-size:.68rem;color:var(--ink3);text-decoration:none;margin-top:.5rem;display:inline-block;}
+.pub-doi:hover{color:var(--ocean);}
+.pub-badge{display:inline-block;font-family:var(--mono);font-size:.6rem;padding:2px 7px;border-radius:3px;margin-left:6px;vertical-align:middle;}
+.badge-peer{background:rgba(61,184,212,.1);color:var(--ocean);border:1px solid rgba(61,184,212,.2);}
+.badge-conf{background:rgba(160,168,176,.08);color:var(--ink3);border:1px solid var(--border);}
+
+/* CONTACT */
+#contact{max-width:1100px;margin:0 auto;padding:6rem 3rem 10rem;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+.contact-intro h2{font-family:var(--serif);font-size:2rem;font-weight:400;color:var(--ink);margin-bottom:1rem;line-height:1.3;}
+.contact-intro p{color:var(--ink2);font-size:.95rem;line-height:1.8;margin-bottom:2rem;}
+.contact-links{display:flex;flex-direction:column;gap:.75rem;}
+.contact-link{display:inline-flex;align-items:center;gap:.75rem;font-size:.88rem;color:var(--ink2);text-decoration:none;transition:color .2s;}
+.contact-link:hover{color:var(--ocean);}
+.contact-link-icon{width:18px;height:18px;opacity:.6;}
+.contact-form{display:flex;flex-direction:column;gap:1rem;}
+.form-input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--ink);font-family:var(--sans);font-size:.88rem;outline:none;transition:border .2s;}
+.form-input:focus{border-color:rgba(61,184,212,.4);}
+.form-input::placeholder{color:var(--ink3);}
+textarea.form-input{min-height:130px;resize:vertical;}
+.form-btn{background:var(--ocean);color:#0a0d0f;border:none;border-radius:8px;padding:.75rem 2rem;font-family:var(--sans);font-size:.88rem;font-weight:500;cursor:pointer;transition:opacity .2s,transform .2s;align-self:flex-start;}
+.form-btn:hover{opacity:.85;transform:translateY(-1px);}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:2rem 3rem;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;color:var(--ink3);font-family:var(--mono);font-size:.68rem;}
+footer a{color:var(--ink3);text-decoration:none;}
+footer a:hover{color:var(--ocean);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{gap:1.2rem;}
+  .hero{padding:0 1.5rem;}
+  #about,#research,#publications,#contact{padding:5rem 1.5rem;}
+  .about-grid{grid-template-columns:1fr;gap:3rem;}
+  .about-photo-wrap{position:static;display:flex;flex-direction:column;align-items:center;}
+  .about-photo{width:180px;}
+  .contact-grid{grid-template-columns:1fr;}
+  .pub-card.featured{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:.5rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">YD</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#publications">Papers</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="hero-bg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="250" cy="250" r="200" stroke-width="1"/>
+    <circle cx="250" cy="250" r="150" stroke-width="1"/>
+    <circle cx="250" cy="250" r="100" stroke-width="1"/>
+    <circle cx="250" cy="250" r="50" stroke-width="1"/>
+    <line x1="50" y1="250" x2="450" y2="250" stroke="var(--ocean)" stroke-width=".5"/>
+    <line x1="250" y1="50" x2="250" y2="450" stroke="var(--ocean)" stroke-width=".5"/>
+  </svg>
+  <p class="hero-sub">Marine Geodesy · University of Washington</p>
+  <h1 class="hero-name">Yoichiro<br><span>Dobashi</span></h1>
+  <p class="hero-tagline">Listening to the seafloor.<br>Turning pressure into <em>discovery</em>.</p>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-photo-wrap">
+      <img class="about-photo" id="ghAvatar" src="profile.jpg" alt="Yoichiro Dobashi" onerror="this.src='https://avatars.githubusercontent.com/Yoichiro-Dobashi'">
+      <div class="about-photo-name">Yoichiro Dobashi</div>
+      <div class="about-photo-role">Ph.D. Student · MG&amp;G</div>
+      <div class="skills-row">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">APG</span>
+        <span class="skill-tag">A-0-A</span>
+        <span class="skill-tag">OBP</span>
+        <span class="skill-tag">HYCOM</span>
+        <span class="skill-tag">ROV</span>
+        <span class="skill-tag">GMT</span>
+        <span class="skill-tag">MATLAB</span>
+        <span class="skill-tag">Git</span>
+      </div>
+    </div>
+    <div class="about-text">
+      <h2>I study how the <em>seafloor moves</em> — one pascal at a time.</h2>
+      <p>I'm a 2nd-year Ph.D. student in the Marine Geology &amp; Geophysics program at the University of Washington School of Oceanography. My research focuses on seafloor pressure observations for vertical geodesy — developing and evaluating instruments that detect millimeter-scale deformation of the ocean floor.</p>
+      <p>My current work centers on <strong>self-calibrating absolute pressure gauges (APGs)</strong> deployed at active sites including Axial Seamount (Juan de Fuca Ridge) and the Endeavour Segment, where I compare multiple instrument designs side-by-side to characterize sensor drift, viscoelastic behavior, and calibration performance over multi-year timescales.</p>
+      <p>Before joining UW, I completed my M.S. at Tokyo University of Marine Science and Technology under Prof. Daisuke Inazu, and worked as a civil engineer at Pacific Consultants on coastal infrastructure and sea-level rise adaptation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="sec-label">02</div>
+  <h2 class="sec-title">Selected Research</h2>
+  <div class="research-list">
+
+    <div class="research-item">
+      <div class="research-num">01</div>
+      <div class="research-body">
+        <div class="research-title">Self-Calibrating Pressure Gauge Evaluation</div>
+        <div class="research-desc">In-situ side-by-side comparison of three APG designs (UW A-0-A, CSCPR, AZA) cabled within a 20 m radius at Axial Seamount Central Caldera (1,500 m depth). Multi-year analysis of drift reduction, spin-up behavior, and viscoelastic sensor characteristics using BOTPT as a stable reference.</div>
+        <div class="research-tags"><span class="rtag">Axial Seamount</span><span class="rtag">OOI RCA</span><span class="rtag">A-0-A</span><span class="rtag">Sensor Drift</span></div>
+      </div>
+    </div>
+
+    <div class="research-item">
+      <div class="research-num">02</div>
+      <div class="research-body">
+        <div class="research-title">Volcanic Seafloor Deformation</div>
+        <div class="research-desc">Monitoring magmatic inflation and eruptive deflation cycles at Axial Seamount using continuous cabled gauges and Mobile Pressure Recorder (MPR) surveys. Constraining magma chamber dynamics through Mogi-model inversions of multi-year pressure records.</div>
+        <div class="research-tags"><span class="rtag">Juan de Fuca Ridge</span><span class="rtag">MPR</span><span class="rtag">Mogi Model</span><span class="rtag">Volcanism</span></div>
+      </div>
+    </div>
+
+    <div class="research-item">
+      <div class="research-num">03</div>
+      <div class="research-body">
+        <div class="research-title">Slow Earthquake Detection</div>
+        <div class="research-desc">Applying calibrated pressure arrays at the Endeavour Segment and Hikurangi Trough to detect slow slip events (SSEs) and inter-seismic strain. Work at Endeavour has revealed previously unreported inflation in the aseismic southern margin, corroborated by hydrothermal temperature surges.</div>
+        <div class="research-tags"><span class="rtag">SSE</span><span class="rtag">Subduction Zones</span><span class="rtag">Endeavour</span><span class="rtag">ONC</span></div>
+      </div>
+    </div>
+
+    <div class="research-item">
+      <div class="research-num">04</div>
+      <div class="research-body">
+        <div class="research-title">Ocean Bottom Pressure Modeling</div>
+        <div class="research-desc">Using numerical ocean models (HYCOM, GLORYS, ECCO2, SOM) to separate oceanic noise from seafloor deformation signals across six Pacific subduction zones — showing atmospheric pressure loading provides 9–15% additional RMS reduction at western Pacific sites.</div>
+        <div class="research-tags"><span class="rtag">HYCOM</span><span class="rtag">GLORYS</span><span class="rtag">Nankai</span><span class="rtag">Cascadia</span><span class="rtag">Hikurangi</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="sec-label">03</div>
+  <h2 class="sec-title">Publications</h2>
+  <div class="pub-list">
+
+    <div class="pub-card">
+      <div>
+        <div class="pub-venue">EGU General Assembly · 2026</div>
+        <div class="pub-title-text">Evaluation of Self-Calibrating Pressure Gauges for Seafloor Geodesy: Instrument Comparison at Axial Seamount, Barkley Canyon, and the Endeavour Segment <span class="pub-badge badge-conf">conference</span></div>
+        <div class="pub-authors"><strong>Y. Dobashi</strong>, W. Wilcock, D. Manalang, K. Smith, L. Dentoni, M. Zumberge et al.</div>
+      </div>
+    </div>
+
+    <div class="pub-card featured">
+      <div class="pub-img-ph">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="28" stroke="rgba(61,184,212,0.3)" stroke-width="1"/>
+          <path d="M5 30 Q15 20 30 30 Q45 40 55 30" stroke="rgba(61,184,212,0.5)" stroke-width="1.5" fill="none"/>
+          <path d="M5 35 Q15 25 30 35 Q45 45 55 35" stroke="rgba(61,184,212,0.3)" stroke-width="1" fill="none"/>
+          <path d="M5 25 Q15 15 30 25 Q45 35 55 25" stroke="rgba(61,184,212,0.3)" stroke-width="1" fill="none"/>
+        </svg>
+      </div>
+      <div>
+        <div class="pub-venue">Frontiers in Earth Science · January 2021</div>
+        <div class="pub-title-text"><a href="https://doi.org/10.3389/feart.2020.598270" target="_blank">Improving Detectability of Seafloor Deformation From Bottom Pressure Observations Using Numerical Ocean Models</a> <span class="pub-badge badge-peer">peer-reviewed</span></div>
+        <div class="pub-authors"><strong>Y. Dobashi</strong> and D. Inazu</div>
+        <div class="pub-desc">OBP observations at six Pacific subduction zones. Numerical ocean models reduce RMS oceanic noise by 5–42%. Atmospheric pressure loading (SOMp) provides additional 9–15% reduction — critical for detecting slow slip of &lt;few cm.</div>
+        <a class="pub-doi" href="https://doi.org/10.3389/feart.2020.598270" target="_blank">doi: 10.3389/feart.2020.598270 ↗</a>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div>
+        <div class="pub-venue">AGU Fall Meeting · 2025</div>
+        <div class="pub-title-text">Laboratory Evaluations of an A-0-A Calibrated Pressure Instrument for the Cascadia Offshore Subduction Zone Observatory <span class="pub-badge badge-conf">conference</span></div>
+        <div class="pub-authors">L. Dentoni, <strong>Y. Dobashi</strong>, D. Manalang, K. Smith, W.S.D. Wilcock</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div>
+        <div class="pub-venue">AGU Fall Meeting · 2019</div>
+        <div class="pub-title-text">Intercomparison of Ocean Models for Improving the Detectability of Seafloor Vertical Deformations from Ocean Bottom Pressure Observations: Applications to Several Subduction Zones <span class="pub-badge badge-conf">conference</span></div>
+        <div class="pub-authors"><strong>Y. Dobashi</strong> and D. Inazu</div>
+        <div class="pub-desc">AGU Fall Meeting 2019, S33D-0611</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-label">04</div>
+  <div class="contact-grid">
+    <div class="contact-intro">
+      <h2>Let's work<br>together.</h2>
+      <p>Open to research collaborations, scientific consulting, and connecting with fellow earth scientists.</p>
+      <div class="contact-links">
+        <a class="contact-link" href="https://github.com/Yoichiro-Dobashi" target="_blank">
+          <svg class="contact-link-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a class="contact-link" href="https://scholar.google.com/scholar?q=Yoichiro+Dobashi" target="_blank">
+          <svg class="contact-link-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 10a8 8 0 0 1 7.162 3.44L24 9.5z"/></svg>
+          Google Scholar
+        </a>
+        <a class="contact-link" href="mailto:dobashi@uw.edu">
+          <svg class="contact-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          dobashi@uw.edu
+        </a>
+        <a class="contact-link" href="https://www.ocean.washington.edu/" target="_blank">
+          <svg class="contact-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          University of Washington
+        </a>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="handleForm(event)">
+      <input class="form-input" type="text" placeholder="Name" required />
+      <input class="form-input" type="email" placeholder="Email" required />
+      <textarea class="form-input" placeholder="Message"></textarea>
+      <button class="form-btn" type="submit">Send Message</button>
+      <div id="form-msg" style="font-size:.8rem;color:var(--ocean);display:none;">✓ Message sent! (opens your mail client)</div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span>Yoichiro Dobashi · University of Washington</span>
+  <span><a href="https://github.com/Yoichiro-Dobashi" target="_blank">github.com/Yoichiro-Dobashi</a></span>
+</footer>
+
+<script>
+// Fallback avatar if local file fails
+document.getElementById('ghAvatar').onerror=function(){this.src='https://avatars.githubusercontent.com/Yoichiro-Dobashi';this.onerror=null;};
+
+// Contact form
+function handleForm(e){
+  e.preventDefault();
+  const name=e.target[0].value;
+  const email=e.target[1].value;
+  const msg=e.target[2].value;
+  window.location.href=`mailto:dobashi@uw.edu?subject=Message from ${encodeURIComponent(name)}&body=${encodeURIComponent(msg+'\n\nFrom: '+email)}`;
+  document.getElementById('form-msg').style.display='block';
+}
+</script>
+</body>
+</html>
